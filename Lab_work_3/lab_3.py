@@ -11,6 +11,8 @@ cap = cv2.VideoCapture(0)
 
 # Для расчета FPS
 prev_time = time.time()
+fps_sum = 0.0
+count_fps = 0
 
 # Основной цикл
 while True:
@@ -48,8 +50,11 @@ while True:
             cv2.putText(frame, "Open your eyes", (x, y+h+30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
 
     # Вычисление FPS
+    
     current_time = time.time()
     fps = 1 / (current_time - prev_time)
+    fps_sum += fps
+    count_fps += 1
     prev_time = current_time
 
     # Отображение FPS на экране
@@ -61,7 +66,7 @@ while True:
     # Прерывание работы программы по нажатию клавиши 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
+print(fps_sum / count_fps)
 # Освобождение ресурсов
 cap.release()
 cv2.destroyAllWindows()
